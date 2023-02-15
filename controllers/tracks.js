@@ -24,11 +24,15 @@
      * 
      */ 
 
-    const createItem=(req,res)=>{
-        const {body}=req
-        console.log(body)
-        res.send({algo:1})
-    };
+   const createItem=async (req,res)=>{
+    const {body}=req
+    try {
+        const data = await tracksModel.create(body)
+        res.status(200).send({data})
+    } catch (error) {
+        res.status(400).send({error})
+    } 
+}; 
 
   /**
      * Actualixar un Registro
