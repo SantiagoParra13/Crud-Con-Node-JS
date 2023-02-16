@@ -24,7 +24,7 @@
      * 
      */ 
 
-   const createItem=async (req,res)=>{
+  /* const createItem=async (req,res)=>{
     const {body}=req
     try {
         const data = await tracksModel.create(body)
@@ -32,7 +32,14 @@
     } catch (error) {
         res.status(400).send({error})
     } 
-}; 
+}; */
+
+const createItem=async (req,res) =>{
+  const {body} = req
+  console.log(body)
+  const data=await tracksModel.create(body)
+  res.send({data})
+}
 
   /**
      * Actualixar un Registro
