@@ -36,12 +36,12 @@ const TracksScheme = new mongoose.Schema(
             },
             end:{
                 type:Number,
-            },
-        
+            }
+            
+        },
         mediaId:{
             type:mongoose.Types.ObjectId,
         },
-    },
        
 },
 
