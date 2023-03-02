@@ -1,54 +1,51 @@
-const mongoose=require("mongoose")
-
+const mongoose = require("mongoose");
+const mongooseDelete = require("mongoose-delete");
 const TracksScheme = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+    },
+    album: {
+      type: String,
+    },
+    cover: {
+      type: String,
+      validate: {
+        validator: (req) => {
+          return true;
+        },
+        massage: "ERROR_URL",
+      },
+    },
+    artist: {
+      name: {
+        type: String,
+      },
+      nickname: {
+        type: String,
+      },
+      nationality: {
+        type: String,
+      },
+    },
+    duration: {
+      start: {
+        type: Number,
+      },
+      end: {
+        type: Number,
+      },
+    },
+    mediaId: {
+      type: mongoose.Types.ObjectId,
+    },
+  },
 
-
-{   
-        name:{
-            type:String
-        },
-        album:{
-            type:String
-        },
-        cover:{
-            type:String,
-            validate:{
-                validator:(req)=>{
-                    return true;
-                },
-                massage:"ERROR_URL",
-            },
-        },
-        artist:{
-            name:{
-                type:String,
-            },
-            nickname:{
-                type:String,
-            },
-            nationality:{
-                type:String,
-           },
-        },
-        duration:{
-            start:{
-                type:Number,
-            },
-            end:{
-                type:Number,
-            }
-            
-        },
-        mediaId:{
-            type:mongoose.Types.ObjectId,
-        },
-       
-},
-
-{
-        versionKey:false,
-        timestamps:true,
-    }
+  {
+    versionKey: false,
+    timestamps: true,
+  }
 );
 
-module.exports=mongoose.model("tracks",TracksScheme)
+TracksScheme.plugin(mongooseDelete, { overrideMethods: "all" });
+module.exports = mongoose.model("tracks", TracksScheme);

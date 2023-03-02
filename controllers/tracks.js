@@ -11,7 +11,7 @@ const { handleHttpError } = require("../utils/handleError");
 
 const getItems = async (req, res) => {
   try {
-    const data = await tracksModel.find({});
+    const data = await tracksModel.find(id);
     res.send({ data });
   } catch (e) {
     handleHttpError(res, "Error_Get_Items");
@@ -22,7 +22,7 @@ const getItem = async (req, res) => {
   try {
     req = matchedData(req);
     const { id } = req;
-    const data = await tracksModel.findById({});
+    const data = await tracksModel.findById(id);
     res.send({ data });
   } catch (e) {
     handleHttpError(res, "Error_Get_Item");
@@ -63,7 +63,15 @@ const createItem = async (req, res) => {
  *
  */
 
-const updateItems = async (req, res) => {};
+const updateItems = async (req, res) => {
+  try {
+    const { id, ...body } = matchedData(req);
+    const data = await tracksModel.findOneAndUpdate(id, body);
+    res.send({ data });
+  } catch (e) {
+    handleHttpError(res, "Error_Update_Items");
+  }
+};
 
 /**
  *  Eliminar unn Registro
@@ -72,6 +80,16 @@ const updateItems = async (req, res) => {};
  *
  */
 
-const deleteItems = async (req, res) => {};
+const deleteItems = async (req, res) => {
+ try {
+   req = matchedData(req);
+   const { id } = req;
+   const data = await tracksModel.delete({_id:id});
+   res.send({ data });
+ } catch (e) {
+   handleHttpError(res, "Error_Delete_Item");
+ }
+
+};
 
 module.exports = { getItems, getItem, createItem, updateItems, deleteItems };

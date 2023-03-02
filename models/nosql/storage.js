@@ -1,22 +1,21 @@
-const mongoose=require("mongoose")
+const mongoose = require("mongoose");
+const mongooseDelete = require("mongoose-delete");
 
 const StorageScheme = new mongoose.Schema(
+  {
+    url: {
+      type: String,
+    },
+    filename: {
+      type: String,
+    },
+  },
 
-
-{   
-        url:{
-            type:String
-        },
-        filename:{
-            type:String
-        }
-     
-},
-
-{
-        timestamps:true, // TODO createdAt, updateAt
-        versionkey:false
-    }
+  {
+    timestamps: true, // TODO createdAt, updateAt
+    versionkey: false,
+  }
 );
 
-module.exports=mongoose.model("Storages",StorageScheme)
+StorageScheme.plugin(mongooseDelete, { overrideMethods: "all" });
+module.exports = mongoose.model("Storages", StorageScheme);
