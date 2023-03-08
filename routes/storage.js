@@ -10,12 +10,12 @@ const { validatorGEtItem } = require("../validators/storage");
 router.get("/", getItems);
 
 //detalle de item
-router.get("/:id",validatorGEtItem, getItem);
+router.get("/:id",validatorGEtItem, getItem); //obtener
 
 //eliminar item
-router.delete("/:id",validatorGEtItem, deleteItems);
+router.delete("/:id",validatorGEtItem, deleteItems);    //eliminar
 
 //crear item
-router.post("/", uploadMiddleware.single("myfile"), createItem);
+router.post("/", uploadMiddleware.single("myfile"), createItem);  //crear
 
 module.exports = router;

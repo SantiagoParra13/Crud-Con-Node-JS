@@ -13,20 +13,20 @@ const fs=require ("fs")
  *
  */
 
-const getItems = async (req, res) => {
+const getItems = async (req, res) => { //se encarga de obtener los elementos almacenados en el modelo de almacenamiento.
   try {
-    const data = await storageModel.find({});
-     res.send({ data });
+    const data = await storageModel.find({}); //Se almacena el objeto en la base de datos y se obtiene el resultado de la operación 
+     res.send({ data }); //Se envía una respuesta con los datos almacenados 
   } catch (e) {
-    handleHttpError(res, "Error_List_Item");
+    handleHttpError(res, "Error_List_Item"); //error
   }
 
  
 };
 
-const getItem = async (req, res) => {
+const getItem = async (req, res) => { //se encarga de obtener un elemento del almacenamiento
     try {
-      const {id}=matchedData(req)
+      const {id}=matchedData(req) // Extraer el valor de la propiedad "id" del objeto "matchedData"
       const data = await storageModel.findById(id);
       res.send({ data });
     } catch (e) {
@@ -55,16 +55,16 @@ const getItem = async (req, res) => {
 
 const createItem = async (req, res) => {
 try{
-  const { body, file } = req;
+  const { body, file } = req;                   //obtener el body y el file.
   console.log(file);
-  const fileData = {
+  const fileData = { 
     filename: file.filename,
-    url: `${PUBLIC_URL}/${file.filename}`,
+    url: `${PUBLIC_URL}/${file.filename}`,       //Se crea el objeto con los datos del archivo
   };
-  const data = await storageModel.create(fileData);
+  const data = await storageModel.create(fileData);    // Se almacena el objeto en la base de datos y se obtiene el resultado de la operación 
   res.send({ data });
 }catch(e){
-  handleHttpError(res, "Error_Detail_Item");
+  handleHttpError(res, "Error_Detail_Item");      //error
 }
   
 };
@@ -85,15 +85,15 @@ const updateItems = async  (req, res) => {};
  *
  */
 
-const deleteItems = async (req, res) => {
+const deleteItems = async (req, res) => { //eliminar un elemento de la base de datos y su archivo asociado.
 try {
-  const { id }=  matchedData(req)
-  const dataFile = await storageModel.findById(id);
-  await storageModel.deleteOne({_id:id})
-  const {filename} = dataFile;
-  const filePath = `${MEDIA_PATH}/${filename}`
+  const { id }=  matchedData(req) //Obtiene el id del elemento
+  const dataFile = await storageModel.findById(id); // Busca el elemento en la base de datos.
+  await storageModel.deleteOne({_id:id}) //Elimina el elemento
+  const {filename} = dataFile; //Obtiene el nombre del archivo asociado al elemento a eliminar
+  const filePath = `${MEDIA_PATH}/${filename}` // Construye la ruta al archivo asociado al elemento a eliminar.
   //fs.unlinkSync(filePath);
-  const data = {filePath,deleted:1}
+  const data = {filePath,deleted:1} // Crea un objeto con los datos necesarios para responder a la solicitud.
   res.send(data)
 } catch (e) {
   handleHttpError(res, "Error_Detail_Item");
@@ -101,4 +101,4 @@ try {
 
 };
 
-module.exports = { getItems, getItem, createItem, updateItems, deleteItems };
+module.exports = { getItems, getItem, createItem, updateItems, deleteItems }; //exporta los modulos
