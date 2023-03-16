@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const authMiddleware = require ("../middleware/session")
 const {
   validatorCreateItem,
   validatorGEtItem,
@@ -9,7 +10,7 @@ const customHeader = require("../middleware/customHeader");
 
 //TODO /tracks GET,POST,DELETE,PUT
 
-router.get("/", getItems);
+router.get("/",authMiddleware, getItems);
 
 router.get("/:id", validatorGEtItem, getItem);
 

@@ -4,6 +4,7 @@ const uploadMiddleware = require("../utils/handleStorage");
 const {createItem,getItem,getItems,updateItems, deleteItems,} = require("../controllers/storage");
 const { validatorGEtItem } = require("../validators/storage");
 
+
 //localhost:3001/api/storage
 
 //lista de item

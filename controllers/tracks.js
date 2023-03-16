@@ -11,8 +11,9 @@ const { handleHttpError } = require("../utils/handleError");
 
 const getItems = async (req, res) => {
   try {
-    const data = await tracksModel.find(id); // busca un elemento en la base de datos.
-    res.send({ data }); //Se envía la respuesta con los datos obtenidos.
+    const user =req.user;
+    const data = await tracksModel.find({}); // busca un elemento en la base de datos.
+    res.send({ data,user }); //Se envía la respuesta con los datos obtenidos.
   } catch (e) {
     handleHttpError(res, "Error_Get_Items"); //error
   }
@@ -88,7 +89,7 @@ const deleteItems = async (req, res) => { //eliminar elementos
    res.send({ data }); //envia los datos
  } catch (e) {
    handleHttpError(res, "Error_Delete_Item"); //error
- }
+ }//hola
 
 };
 

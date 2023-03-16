@@ -3,7 +3,7 @@ const { storageModel } = require("../models");
 const PUBLIC_URL = process.env.PUBLIC_URL;
 const MEDIA_PATH = `${__dirname}/../storage`;
 const { handleHttpError } = require("../utils/handleError");
-const fs=require ("fs")
+const fs  = require ("fs")
 
 
 /**
@@ -32,7 +32,7 @@ const getItem = async (req, res) => { //se encarga de obtener un elemento del al
     } catch (e) {
       handleHttpError(res, "Error_Detail_Item");
     }
-
+ 
     
 };
 
@@ -85,15 +85,15 @@ const updateItems = async  (req, res) => {};
  *
  */
 
-const deleteItems = async (req, res) => { //eliminar un elemento de la base de datos y su archivo asociado.
+const deleteItems = async (req, res) => {               //eliminar un elemento de la base de datos y su archivo asociado.
 try {
-  const { id }=  matchedData(req) //Obtiene el id del elemento
-  const dataFile = await storageModel.findById(id); // Busca el elemento en la base de datos.
-  await storageModel.deleteOne({_id:id}) //Elimina el elemento
-  const {filename} = dataFile; //Obtiene el nombre del archivo asociado al elemento a eliminar
-  const filePath = `${MEDIA_PATH}/${filename}` // Construye la ruta al archivo asociado al elemento a eliminar.
-  //fs.unlinkSync(filePath);
-  const data = {filePath,deleted:1} // Crea un objeto con los datos necesarios para responder a la solicitud.
+  const { id }=  matchedData(req)                   //Obtiene el id del elemento
+  const dataFile = await storageModel.findById(id);  // Busca el elemento en la base de datos.
+  await storageModel.delete({_id:id})                //Elimina el elemento
+  const {filename} = dataFile;                            //Obtiene el nombre del archivo asociado al elemento a eliminar
+  const filePath = `${MEDIA_PATH}/${filename}`            // Construye la ruta al archivo asociado al elemento a eliminar.
+  fs.unlinkSync(filePath);
+  const data = {filePath,deleted:1}                       // Crea un objeto con los datos necesarios para responder a la solicitud.
   res.send(data)
 } catch (e) {
   handleHttpError(res, "Error_Detail_Item");
